@@ -1,0 +1,7 @@
+# Python 3.9.10
+
+streamlit
+langchain
+langchain-community
+pypdf
+fastembed
