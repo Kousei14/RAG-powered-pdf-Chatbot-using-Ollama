@@ -1,6 +1,9 @@
 from chunk_vector_store import ChunkVectorStore as cvs
 from openai import OpenAI
 
+from dotenv import load_dotenv
+import os
+
 class Rag:
   def __init__(self) -> None:
     self.csv_obj = cvs()
@@ -25,7 +28,9 @@ class Rag:
     formatted_prompt = self.prompt.format(question = query,
                                      context = ". ".join([doc.page_content for doc in retrieved_documents]))
     
-    GOOGLE_API_KEY = "AIzaSyC2gWOGsO3ANV_KeCEpcAo8YFDPrGuyJA8"
+    load_dotenv()
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
     client = OpenAI(
         api_key = GOOGLE_API_KEY,
         base_url = "https://generativelanguage.googleapis.com/v1beta/openai/"
