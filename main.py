@@ -39,7 +39,7 @@ def process_input():
                                       "content": response}) # append LLM response to list
 
 def main():
-  st.title("Docu-Bot")
+  st.title("Docu-GPT")
 
   if len(st.session_state) == 0:
     st.session_state["assistant"] = Rag()
