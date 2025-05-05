@@ -24,38 +24,26 @@ class Rag:
     self.chain = None
 
   def set_retriever(self):
-    self.retriever = self.vector_store.as_retriever(
-      search_type = "similarity_score_threshold",
-      search_kwargs = {"k": 3, "score_threshold": 0.5},
-    )
+    self.retriever = self.vector_store.as_retriever()
 
-  # Augment the context to original prompt
   def augment(self):
     self.chain = ({"context": self.retriever, "question": RunnablePassthrough()}
     | self.prompt
     | self.model
     | StrOutputParser())
 
-  # Generate the response
   def ask(self, query: str):
     if not self.chain:
       return "Please upload a PDF file for context"
 
     return self.chain.invoke(query)
 
-  # Main feed
   def feed(self, file_path: str):
 
-    # 1. Splits PDF into chunks
     chunks = self.csv_obj.split_into_chunks(file_path = file_path)
-
-    # 2. Store chunks into a vector DB
     self.vector_store = self.csv_obj.store_to_vector_database(chunks)
 
-    # 3. Define retrieval parameters
     self.set_retriever()
-
-    # 4. Define chain
     self.augment()
 
 

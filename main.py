@@ -2,7 +2,7 @@ import streamlit as st
 import tempfile
 import os
 
-from rag import Rag
+from rag_gemini import Rag
 
 def display_messages():
   for message in st.session_state.messages:
@@ -10,8 +10,8 @@ def display_messages():
       st.markdown(message['content'])
 
 def process_file():
-  st.session_state["assistant"].clear()
-  st.session_state.messages = []
+  st.session_state["assistant"].clear() # delete previous Rag() class
+  st.session_state.messages = [] # delete chat history
 
   for file in st.session_state["file_uploader"]:
     with tempfile.NamedTemporaryFile(delete = False) as tf:
@@ -23,16 +23,20 @@ def process_file():
     os.remove(file_path)
 
 def process_input():
-  if prompt := st.chat_input("Ask me anything"):
+  if prompt := st.chat_input("Ask me anything"): # walrus operator
     with st.chat_message("user"):
       st.markdown(prompt)
 
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", 
+                                      "content": prompt}) # append query to list
 
     response = st.session_state["assistant"].ask(prompt)
+    
     with st.chat_message("assistant"):
       st.markdown(response)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+
+    st.session_state.messages.append({"role": "assistant", 
+                                      "content": response}) # append LLM response to list
 
 def main():
   st.title("Docu-Bot")

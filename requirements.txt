@@ -1,7 +1,10 @@
-# Python 3.9.10
+# Python >=3.9.10
 
 streamlit
 langchain
 langchain-community
 pypdf
 fastembed
+faiss-cpu
+chromadb
+openai
