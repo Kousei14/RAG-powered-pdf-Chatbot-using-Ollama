@@ -30,7 +30,7 @@ class ChunkVectorStore:
 
 if __name__ == "__main__":
   cvs = ChunkVectorStore()
-  chunks = cvs.split_into_chunks("Gonzales_Kenaniah_CV.pdf")
+  chunks = cvs.split_into_chunks("files/Gonzales_Kenaniah_CV.pdf")
   vector_store_FAISS = cvs.store_to_vector_database(chunks)
   
   retriever_FAISS = vector_store_FAISS.as_retriever()

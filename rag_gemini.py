@@ -67,7 +67,7 @@ if __name__ == "__main__":
   chat_history = []
 
   rag = Rag()
-  rag.feed("Gonzales_Kenaniah_CV.pdf")
+  rag.feed("files/Gonzales_Kenaniah_CV.pdf")
   
   query = input("Query: ")
   while query != "quit":
